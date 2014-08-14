@@ -19,29 +19,53 @@
     function search_google(info)
     {
         var query = "http://google.com/search?q=" + info.selectionText;
-        chrome.tabs.create({
-            "url" : query
-        });
+        chrome.tabs.create({ "url" : query });
     }
 
     function search_google_maps(info)
     {
-        var searchstring = info.selectionText;
-        chrome.tabs.create({url: "http://maps.google.com/maps?q=" + searchstring})
+        var query = "http://maps.google.co.m/maps?q=" + info.selectionText;
+        chrome.tabs.create({ url: query })
+    }
+
+    function search_stack_overflow(info)
+    {
+        var query = "http://stackoverflow.com/search?q=" + info.selectionText;
+        chrome.tabs.create({ "url" : query });
+    }
+
+    // Link Functions
+
+    function open_link(info)
+    {
+        console.log("you clicked this");
+        var url = info.linkUrl;
+        console.log(url);
+        chrome.tabs.create({
+            "url" : url
+        });
     }
 
 
 // -------------------------------------------------------------------
 // Define the Parents
+    
+    // Select Text
+    var select_parent = chrome.contextMenus.create({
+        "title": "Menu for Selected Text",
+        "contexts": ["selection"]
+    });
 
-var select_parent = chrome.contextMenus.create({
-    "title": "Menu for Selected Text",
-    "contexts": ["selection"]
-});
+    // Click somewhere on the page
+    var regular_parent = chrome.contextMenus.create({
+        "title": "Menu for Regular Use"
+    });
 
-var regular_parent = chrome.contextMenus.create({
-    "title": "Menu for Regular Use"
-});
+    // Right Click on a Link
+    var link_parent = chrome.contextMenus.create({
+        "title": "Menu for Links",
+        "contexts": ["link"]
+    });
 
 
 // -------------------------------------------------------------------
@@ -71,23 +95,36 @@ var regular_parent = chrome.contextMenus.create({
         "onclick": search_google_maps   // function to call
     });
 
+    var child_query_stack_overflow = chorome.contextMenus.create({
+        "title": "Stack Ovelflow",
+        "parentId" : select_parent,
+        "contexts" : ["selection"],
+        "onclick" : search_stack_overflow
+    });
+
+    // Link Children
+    var child_link_open = chrome.contextMenus.create({
+        "title": "Open in a new tab",
+        "parentId" : link_parent,
+        "contexts" : ["link"],
+        "onclick" : open_link
+    });    
 
 // -------------------------------------------------------------------
 // Some other crap at the bottom
 
-
-
 // alert("boll");
 
-// right click on link event
-
 /*
-function searchgooglemaps(info)
-{
- var searchstring = info.selectionText;
- chrome.tabs.create({url: "http://maps.google.com/maps?q=" + searchstring})
-}
 
-chrome.contextMenus.create({title: "Search Google Maps", contexts:["selection"], onclick: searchgooglemaps});
+chrome.contextMenus.create({  
+     title: "Open link in new tab",  
+     contexts: ["link"],  
+     onclick: function search(OnClickData) {  
+       chrome.tabs.create ({url: OnClickData.linkUrl}) }
+  });
+
 */
+
+
 
