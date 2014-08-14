@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+
+    "name": "Read Later Bookmarks",
+    "description": "If you are reading an article and it contains a link, add it to this list and you can read it later.",
+    "version": "0.0.0",
+
+    "permissions": [
+        "contextMenus",
+        "tabs"
+    ],
+    "icons" : {
+        "16" : "icon-16.png",
+        "48" : "icon-48.png",
+        "128" : "icon-128.png"
+    },
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "default.html"
+    },
+    "background": {
+        "scripts": ["menu.js"]
+    }
+}
+
