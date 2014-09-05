@@ -15,6 +15,10 @@ console.log( "version 0.0.0.018" );
             var _args = arguments[0];
             var info = _args['info'];
             var query = _args['caller']['query_root'] || 'http://google.com/search?q=';
+
+            // sanitize the query
+//             query.replace(/%20/, ' ');
+
             query += info.selectionText;
             console.log("query is:" , query);
             chrome.tabs.create({ "url" : query });
@@ -72,6 +76,14 @@ var data_object =
             "name" : "stack_overflow",
             "query_root" : "http://stackoverflow.com/search?q=",
             "title" : "Search on Stack Overflow",
+            "function_name" : "generic_search",
+            "contexts" : ["selection"],
+            "parent_id" : "select_parent"
+        },
+        {   
+            "name" : "wikipedia",
+            "query_root" : "http://wikipedia.com/w/index.php?search=",
+            "title" : "Search on Wikipedia",
             "function_name" : "generic_search",
             "contexts" : ["selection"],
             "parent_id" : "select_parent"
